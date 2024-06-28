@@ -1,0 +1,82 @@
+import json
+import os
+
+#nombre:str,credito:int
+
+def agregarCliente(nombre:str):
+    with open("biblioteca.json", mode = "r") as lecturaJson:
+        leerJason= json.load(lecturaJson)  
+
+        categoria_nueva= {
+            "CategoriaID": len(leerJason["Categoria"])+ 1,
+            "Nombre": nombre,
+        }
+
+        leerJason["Categoria"].append(categoria_nueva)
+
+    with open("biblioteca.json", mode = "w") as escrituraJson:
+        json.dump(leerJason, escrituraJson, indent= 4)
+
+        print("cliente agregado correctamente")
+
+#agregarCliente()
+
+def editar_categoria(nombre:str):
+    contador = 0
+    with open("biblioteca.json", mode = "r") as lecturaJson:
+        leerJason= json.load(lecturaJson)
+        for i in leerJason["Categoria"]:
+
+            if i["Nombre"] == nombre:
+                print("encontrado")
+                break
+            contador+= 1
+        leerJason["clientes"][contador]["Nombre"]=input("ingrese el nuevo nombre: ")
+        
+    with open("biblioteca.json", mode = "w") as escrituraJson:
+        json.dump(leerJason, escrituraJson, indent= 4)
+        print("cliente editado correctamente")  
+
+editar_categoria()
+    
+
+def eliminarCliente(id:int):
+    with open("biblioteca.json", mode = "r") as lecturaJson:
+        leerJason= json.load(lecturaJson)
+        print(leerJason["Categoria"])
+        id=int(input("ingrese una id: "))
+        CategoriaID = leerJason["Categoria"]
+        
+        for i, Categoria in enumerate(CategoriaID):
+            if Categoria["CategoriaID"] == id:
+                CategoriaID.pop(i) 
+                print("id eliminado correctamente")
+                
+                break
+        if not CategoriaID:
+            print("Cliente no encontrado")
+        for idn, Categoria in enumerate(CategoriaID, start=1):
+                    CategoriaID["id"] = idn
+                    print("la lista se actualizo con exito")
+                    break
+
+    with open("biblioteca.json", mode = "w") as escrituraJson:
+        json.dump(leerJason, escrituraJson, indent= 4)
+        
+
+def buscar_categoria():
+    with open("biblioteca.json", mode = "r") as lecturaJson:
+        leerJason= json.load(lecturaJson)  
+        for i in leerJason["Categoria"]:
+            if i["CategoriaID"] == id:
+                print("Categoria encontrado")
+                print(leerJason["CategoriaID"][id-1])
+                break
+            if i not in leerJason["CategoriaID"]:
+                print("id no encontrado")
+                break
+
+     
+def crear_reporte():
+    with open("biblioteca.json", mode = "r") as lecturaJson:
+        leerJason= json.load(lecturaJson)
